@@ -11,7 +11,14 @@ export default async function GenerateCardPage(props: Props) {
   if (!id) {
     return (
       <html>
-        <body>
+        <body
+          style={{
+            margin: 0,
+            padding: 0,
+            background: "var(--background)",
+            color: "var(--foreground)",
+          }}
+        >
           <p>No restaurant id provided.</p>
         </body>
       </html>
@@ -34,10 +41,17 @@ export default async function GenerateCardPage(props: Props) {
     .select("*")
     .eq("restaurant_id", id);
 
-  if (!restaurant) {    
+  if (!restaurant) {
     return (
       <html>
-        <body>
+        <body
+          style={{
+            margin: 0,
+            padding: 0,
+            background: "var(--background)",
+            color: "var(--foreground)",
+          }}
+        >
           <p>Restaurant not found.</p>
         </body>
       </html>
@@ -46,8 +60,29 @@ export default async function GenerateCardPage(props: Props) {
 
   return (
     <html>
-      <body style={{ margin: 0, padding: 0 }}>
+      <body
+        style={{
+          margin: 0,
+          padding: 0,
+          background: "var(--background)",
+          color: "var(--foreground)",
+        }}
+      >
         <MenuCard restaurant={restaurant} items={items || []} />
+
+        {/* Global Footer */}
+        <footer
+          style={{
+            width: "100%",
+            textAlign: "center",
+            padding: "1.5rem 0",
+            fontSize: "0.9rem",
+            color: "var(--foreground)",
+            opacity: 0.8,
+          }}
+        >
+          Ottawa-menus by M.George
+        </footer>
       </body>
     </html>
   );

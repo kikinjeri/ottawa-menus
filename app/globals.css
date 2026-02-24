@@ -10,20 +10,35 @@
    GLOBAL VARIABLES (theme)
 -------------------------------------------------- */
 :root {
-  --accent: #0a1a2f;
-  --accent-light: #1c2f4a;
-  --gold: #f5c26b;
-  --text-light: #ffffff;
-  --text-dark: #1c1c1c;
+  /* Brand accent (replaces dark orange) */
+  --accent: #821D2E;            /* deep maroon */
+  --accent-light: #A12A3D;      /* lighter maroon */
 
-  --background: #ffffff;
-  --foreground: #0a1a2f;
+  /* Existing palette you want to KEEP */
+  --warm-yellow: #F7D488;       /* highlight */
+  --warm-orange: #E8A75D;       /* secondary accent */
 
-  /* Restaurant card theme */
-  --primary: #0a1a2f;
-  --secondary: #f5c26b;
+  /* Light blue/gray background you like */
+  --background: #f4f4f5;        /* soft blue-gray */
+  --foreground: #2B1B0F;        /* warm brown/black text */
+
+  /* Restaurant card theme (same, but accent swapped) */
+  --primary: var(--accent);     /* card background */
+  --secondary: var(--warm-yellow);
   --text: #ffffff;
+
+  /* Borders + shadows */
+  --card-border: #E6D8C8;
+  --shadow-soft: rgba(0, 0, 0, 0.08);
+  --shadow-strong: rgba(0, 0, 0, 0.15);
+
+  /* Future per-restaurant overrides */
+  --restaurant-primary: var(--accent);
+  --restaurant-secondary: var(--warm-yellow);
 }
+
+
+
 
 /* --------------------------------------------------
    GLOBAL BASE STYLES
