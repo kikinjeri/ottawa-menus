@@ -10,6 +10,8 @@ interface Restaurant {
   neighbourhood?: string;
   categories?: string[];
   delivery_platforms?: string[];
+  cuisine?: string;
+  tags?: string[];
 }
 
 export default function RestaurantsControlPage() {
@@ -30,12 +32,17 @@ export default function RestaurantsControlPage() {
     return (
       r.name.toLowerCase().includes(q) ||
       r.neighbourhood?.toLowerCase().includes(q) ||
-      r.categories?.join(" ").toLowerCase().includes(q)
+      r.categories?.join(" ").toLowerCase().includes(q) ||
+      r.cuisine?.toLowerCase().includes(q) ||
+      r.tags?.join(" ").toLowerCase().includes(q)
     );
   });
 
   return (
-    <div className="flex flex-col gap-6 p-6">
+    <div
+      className="flex flex-col gap-8 p-6 min-h-screen"
+      style={{ backgroundColor: "#c9cbce" }}
+    >
       {/* Search */}
       <div className="flex justify-center">
         <input
@@ -43,8 +50,22 @@ export default function RestaurantsControlPage() {
           placeholder="Search restaurants or cuisine"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="w-full max-w-md px-4 py-3 border rounded-lg shadow-sm"
+          className="w-full max-w-md px-4 py-3 border border-gray-300 rounded-lg 
+                     shadow-sm bg-white focus:outline-none focus:ring-2 
+                     focus:ring-[var(--accent)] transition"
         />
+      </div>
+
+      {/* Add Restaurant Button */}
+      <div className="flex justify-end max-w-6xl mx-auto w-full">
+        <a
+          href="/control-center/restaurants/new"
+          className="px-4 py-2 rounded-lg font-medium 
+                     bg-[var(--accent)] text-white shadow-sm 
+                     hover:bg-[var(--accent-light)] transition-all duration-200"
+        >
+          Add Restaurant
+        </a>
       </div>
 
       {/* Cards Grid */}
@@ -52,43 +73,91 @@ export default function RestaurantsControlPage() {
         {filtered.map((restaurant) => (
           <div
             key={restaurant.id}
-            className="border rounded-xl p-5 shadow-sm bg-white flex flex-col justify-between h-full"
+            className="rounded-xl p-5 shadow-xl 
+                       bg-[#fdfdfd] border border-gray-300 
+                       flex flex-col justify-between h-full 
+                       hover:shadow-2xl transition-all duration-200"
           >
             <div className="space-y-2">
-              <h2 className="text-xl font-semibold">{restaurant.name}</h2>
+              <h2 className="text-xl font-semibold tracking-tight text-[var(--accent)]">
+                {restaurant.name}
+              </h2>
 
               {restaurant.neighbourhood && (
-                <p className="text-sm text-gray-600">
+                <p className="text-sm font-semibold text-gray-900">
                   {restaurant.neighbourhood}
                 </p>
               )}
 
-              {restaurant.categories?.length > 0 && (
-                <p className="text-sm text-gray-700">
-                  Cuisine: {restaurant.categories.join(", ")}
+              {restaurant.cuisine && (
+                <p className="text-sm text-gray-800">
+                  Cuisine: {restaurant.cuisine}
+                </p>
+              )}
+
+              {restaurant.tags?.length > 0 && (
+                <p className="text-sm text-gray-800">
+                  Tags: {restaurant.tags.join(", ")}
                 </p>
               )}
 
               {restaurant.address && (
-                <p className="text-sm text-gray-700">📍 {restaurant.address}</p>
+                <p className="text-sm text-gray-800">📍 {restaurant.address}</p>
               )}
 
               {restaurant.phone && (
-                <p className="text-sm text-gray-700">☎️ {restaurant.phone}</p>
+                <p className="text-sm text-gray-800">☎️ {restaurant.phone}</p>
               )}
 
+              {/* Delivery Platforms with Bright Navy Links */}
               {restaurant.delivery_platforms?.length > 0 && (
-                <p className="text-sm text-gray-700">
-                  Delivery: {restaurant.delivery_platforms.join(", ")}
-                </p>
+                <div className="text-sm flex flex-wrap gap-2">
+                  {restaurant.delivery_platforms.map((platform) => {
+                    const name = platform.toLowerCase();
+                    let url = "#";
+
+                    if (name.includes("uber")) {
+                      url = `https://www.ubereats.com/ca/search?diningMode=DELIVERY&query=${encodeURIComponent(
+                        restaurant.name + " Ottawa",
+                      )}`;
+                    }
+
+                    if (name.includes("door")) {
+                      url = `https://www.doordash.com/search/store/${encodeURIComponent(
+                        restaurant.name + " Ottawa",
+                      )}`;
+                    }
+
+                    if (name.includes("skip")) {
+                      url = `https://www.skipthedishes.com/search?q=${encodeURIComponent(
+                        restaurant.name + " Ottawa",
+                      )}`;
+                    }
+
+                    return (
+                      <a
+                        key={platform}
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-semibold text-[#1b3b6f] hover:text-[var(--accent-light)] underline transition"
+                      >
+                        {platform}
+                      </a>
+                    );
+                  })}
+                </div>
               )}
             </div>
 
+            {/* Buttons */}
             <div className="flex gap-2 mt-4">
               <a
                 href={`/api/generate-card?id=${restaurant.id}`}
                 target="_blank"
-                className="btn btn-primary flex-1 text-center"
+                className="flex-1 text-center px-4 py-2 rounded-lg font-medium 
+                           bg-[var(--accent)] text-white shadow-sm 
+                           hover:bg-[var(--accent-light)] transition-all duration-200"
               >
                 Preview
               </a>
@@ -101,7 +170,9 @@ export default function RestaurantsControlPage() {
                   });
                   alert("Posted to Bluesky!");
                 }}
-                className="btn btn-secondary flex-1"
+                className="flex-1 text-center px-4 py-2 rounded-lg font-medium 
+                           bg-black text-white shadow-sm 
+                           hover:bg-gray-800 transition-all duration-200"
               >
                 Post
               </button>
