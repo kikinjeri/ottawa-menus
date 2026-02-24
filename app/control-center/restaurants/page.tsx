@@ -102,7 +102,19 @@ export default function RestaurantsControlPage() {
               )}
 
               {restaurant.address && (
-                <p className="text-sm text-gray-800">📍 {restaurant.address}</p>
+                <p className="text-sm text-gray-800">
+                  {" "}
+                  📍 {restaurant.address}{" "}
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(restaurant.address + " Ottawa")}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold text-[#1b3b6f] underline hover:text-[var(--accent-light)] transition"
+                  >
+                    {" "}
+                    View on Google Maps{" "}
+                  </a>{" "}
+                </p>
               )}
 
               {restaurant.phone && (
