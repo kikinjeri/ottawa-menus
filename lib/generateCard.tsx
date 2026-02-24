@@ -15,7 +15,33 @@ function Section({ title, children }) {
 }
 
 export function MenuCard({ restaurant, items }) {
+  // Restaurants can still override their accent color
   const accent = restaurant.primary_color || "var(--accent)";
+
+  // --- SORT MENU ITEMS: beverages go last ---
+  const drinkKeywords = [
+    "beverage",
+    "beverages",
+    "drink",
+    "drinks",
+    "wine",
+    "beer",
+    "cocktail",
+    "cocktails",
+    "soda",
+    "juice",
+    "coffee",
+    "tea",
+  ];
+
+  const sortedItems = [...items].sort((a, b) => {
+    const isA = a.tags?.some((t) => drinkKeywords.includes(t.toLowerCase()));
+    const isB = b.tags?.some((t) => drinkKeywords.includes(t.toLowerCase()));
+
+    if (isA && !isB) return 1;
+    if (!isA && isB) return -1;
+    return 0;
+  });
 
   return (
     <div
@@ -57,23 +83,18 @@ export function MenuCard({ restaurant, items }) {
           border: `4px solid var(--accent)`,
         }}
       >
-        {/* HEADER — TWO COLUMNS */}
+        {/* RESTAURANT NAME — ABOVE BOTH COLUMNS */}
+        <h1
+          className="text-[32px] font-extrabold leading-tight mb-4"
+          style={{ color: "var(--accent)" }}
+        >
+          {restaurant.name}
+        </h1>
+
+        {/* TWO-COLUMN HEADER */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           {/* LEFT COLUMN */}
           <div>
-            <h1
-              className="text-[32px] font-extrabold leading-tight mb-1"
-              style={{ color: "var(--accent)" }}
-            >
-              {restaurant.name}
-            </h1>
-
-            {restaurant.neighbourhood && (
-              <p className="text-[16px] font-semibold opacity-80 mb-2">
-                {restaurant.neighbourhood}
-              </p>
-            )}
-
             {restaurant.vibe && (
               <p className="text-[14px] italic opacity-80 mb-2">
                 {restaurant.vibe}
@@ -81,17 +102,17 @@ export function MenuCard({ restaurant, items }) {
             )}
 
             {restaurant.description && (
-              <p className="text-[14px] opacity-90 leading-relaxed">
+              <p className="text-[14px] opacity-90 leading-relaxed mb-2">
                 {restaurant.description}
               </p>
             )}
 
             {restaurant.tags?.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-3">
+              <div className="flex flex-wrap gap-2 mt-2">
                 {restaurant.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-2 py-1 text-xs rounded"
+                    className="px-2 py-1 text-xs font-bold rounded"
                     style={{
                       background: "var(--warm-yellow)",
                       color: "var(--foreground)",
@@ -106,6 +127,12 @@ export function MenuCard({ restaurant, items }) {
 
           {/* RIGHT COLUMN */}
           <div className="text-[14px] opacity-90">
+            {restaurant.neighbourhood && (
+              <p className="mb-1">
+                <strong>Neighbourhood:</strong> {restaurant.neighbourhood}
+              </p>
+            )}
+
             {restaurant.address && (
               <p className="mb-1">
                 <strong>Address:</strong> {restaurant.address}
@@ -131,8 +158,48 @@ export function MenuCard({ restaurant, items }) {
               </p>
             )}
 
+            {/* DELIVERY LINKS */}
+            <div className="mt-2">
+              {restaurant.ubereats_url && (
+                <a
+                  href={restaurant.ubereats_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block underline mb-1 font-semibold"
+                  style={{ color: accent }}
+                >
+                  UberEats
+                </a>
+              )}
+
+              {restaurant.doordash_url && (
+                <a
+                  href={restaurant.doordash_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block underline mb-1 font-semibold"
+                  style={{ color: accent }}
+                >
+                  DoorDash
+                </a>
+              )}
+
+              {restaurant.skip_url && (
+                <a
+                  href={restaurant.skip_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block underline mb-1 font-semibold"
+                  style={{ color: accent }}
+                >
+                  SkipTheDishes
+                </a>
+              )}
+            </div>
+
+            {/* MAP LINK */}
             {restaurant.address && (
-              <p className="mt-2">
+              <p className="mt-3">
                 <a
                   href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
                     restaurant.address + " Ottawa",
@@ -160,12 +227,12 @@ export function MenuCard({ restaurant, items }) {
           Menu Highlights
         </h2>
 
-        {items.length === 0 && (
+        {sortedItems.length === 0 && (
           <p className="text-[15px]">No menu items available.</p>
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {items.map((item) => (
+          {sortedItems.map((item) => (
             <div
               key={item.id}
               className="p-5 rounded-xl shadow-sm border"
