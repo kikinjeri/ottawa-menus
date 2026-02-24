@@ -100,28 +100,29 @@ export default function RestaurantsControlPage() {
                   Tags: {restaurant.tags.join(", ")}
                 </p>
               )}
+              {restaurant.address && (
+                <p className="text-sm text-gray-800">📍 {restaurant.address}</p>
+              )}
 
               {restaurant.address && (
-                <p className="text-sm text-gray-800">
-                  {" "}
-                  📍 {restaurant.address}{" "}
+                <p className="text-sm">
                   <a
-                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(restaurant.address + " Ottawa")}`}
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                      restaurant.address + " Ottawa",
+                    )}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="font-semibold text-[#1b3b6f] underline hover:text-[var(--accent-light)] transition"
                   >
-                    {" "}
-                    View on Google Maps{" "}
-                  </a>{" "}
+                    View on Google Maps
+                  </a>
                 </p>
               )}
-
               {restaurant.phone && (
                 <p className="text-sm text-gray-800">☎️ {restaurant.phone}</p>
               )}
 
-              {/* Delivery Platforms with Bright Navy Links */}
+              {/* Delivery Platforms */}
               {restaurant.delivery_platforms?.length > 0 && (
                 <div className="text-sm flex flex-wrap gap-2">
                   {restaurant.delivery_platforms.map((platform) => {
@@ -164,8 +165,9 @@ export default function RestaurantsControlPage() {
 
             {/* Buttons */}
             <div className="flex gap-2 mt-4">
+              {/* ⭐ Correct Preview Button */}
               <a
-                href={`/api/generate-card?id=${restaurant.id}`}
+                href={`/generate-card?id=${restaurant.id}`}
                 target="_blank"
                 className="flex-1 text-center px-4 py-2 rounded-lg font-medium 
                            bg-[var(--accent)] text-white shadow-sm 
