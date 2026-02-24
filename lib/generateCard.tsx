@@ -1,16 +1,16 @@
 "use client";
 
 export function MenuCard({ restaurant, items }) {
-  // Ottawa‑Menus vibrant poster palette
-  const OM_BG = "#FDFCFB"; // warm soft white (poster-friendly)
-  const OM_TEXT = "#111827"; // rich charcoal
+  // Ottawa‑Menus Urban Minimal + Pop palette
+  const OM_BG = "#FAFAFA"; // clean neutral white
+  const OM_TEXT = "#111111"; // deep black
   const OM_TEXT_SECONDARY = "#4B5563";
-  const OM_ACCENT = "#FF6B35"; // vibrant modern orange
-  const OM_ACCENT_DARK = "#1E3A8A"; // deep blue for balance
+  const OM_ACCENT = "#EF4444"; // bold red (primary brand)
+  const OM_ACCENT_COOL = "#0EA5E9"; // cyan pop (secondary brand)
   const OM_CARD = "#FFFFFF"; // crisp white for item cards
 
   // Restaurant accent used only for links
-  const accent = restaurant.primary_color || OM_ACCENT;
+  const accent = restaurant.primary_color || OM_ACCENT_COOL;
 
   return (
     <div
@@ -23,15 +23,15 @@ export function MenuCard({ restaurant, items }) {
         background: OM_BG,
         color: OM_TEXT,
         borderRadius: 20,
-        border: `5px solid ${OM_ACCENT}`,
-        boxShadow: "0 8px 20px rgba(0,0,0,0.08)",
+        border: `4px solid ${OM_ACCENT}`,
+        boxShadow: "0 8px 24px rgba(0,0,0,0.06)",
       }}
     >
       {/* Restaurant Name */}
       <h1
         style={{
-          fontSize: 36,
-          marginBottom: 8,
+          fontSize: 38,
+          marginBottom: 4,
           color: OM_ACCENT,
           fontWeight: 800,
           letterSpacing: "-0.5px",
@@ -46,8 +46,8 @@ export function MenuCard({ restaurant, items }) {
           style={{
             fontSize: 18,
             fontWeight: 600,
-            marginBottom: 12,
-            color: OM_ACCENT_DARK,
+            marginBottom: 16,
+            color: OM_ACCENT_COOL,
           }}
         >
           {restaurant.neighbourhood}
@@ -56,7 +56,7 @@ export function MenuCard({ restaurant, items }) {
 
       {/* HOURS */}
       {restaurant.hours && (
-        <div style={{ marginBottom: 16 }}>
+        <div style={{ marginBottom: 18 }}>
           <p style={{ fontSize: 16, fontWeight: 700, color: OM_ACCENT }}>
             Hours
           </p>
@@ -68,7 +68,7 @@ export function MenuCard({ restaurant, items }) {
 
       {/* DELIVERY OPTIONS */}
       {restaurant.delivery_platforms?.length > 0 && (
-        <div style={{ marginBottom: 16 }}>
+        <div style={{ marginBottom: 18 }}>
           <p style={{ fontSize: 16, fontWeight: 700, color: OM_ACCENT }}>
             Delivery Options
           </p>
@@ -80,7 +80,7 @@ export function MenuCard({ restaurant, items }) {
 
       {/* DESCRIPTION */}
       {restaurant.description && (
-        <div style={{ marginBottom: 16 }}>
+        <div style={{ marginBottom: 18 }}>
           <p style={{ fontSize: 16, fontWeight: 700, color: OM_ACCENT }}>
             About
           </p>
@@ -94,7 +94,7 @@ export function MenuCard({ restaurant, items }) {
 
       {/* VIBE */}
       {restaurant.vibe && (
-        <div style={{ marginBottom: 16 }}>
+        <div style={{ marginBottom: 18 }}>
           <p style={{ fontSize: 16, fontWeight: 700, color: OM_ACCENT }}>
             Vibe
           </p>
@@ -106,7 +106,7 @@ export function MenuCard({ restaurant, items }) {
 
       {/* TAGS */}
       {restaurant.tags?.length > 0 && (
-        <div style={{ marginBottom: 16 }}>
+        <div style={{ marginBottom: 18 }}>
           <p style={{ fontSize: 16, fontWeight: 700, color: OM_ACCENT }}>
             Tags
           </p>
@@ -132,7 +132,7 @@ export function MenuCard({ restaurant, items }) {
 
       {/* GOOGLE MAPS LINK */}
       {restaurant.address && (
-        <p style={{ marginBottom: 16 }}>
+        <p style={{ marginBottom: 18 }}>
           <a
             href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
               restaurant.address + " Ottawa",
@@ -155,15 +155,15 @@ export function MenuCard({ restaurant, items }) {
         style={{
           border: "none",
           borderTop: `3px solid ${OM_ACCENT}55`,
-          margin: "20px 0",
+          margin: "22px 0",
         }}
       />
 
       {/* MENU ITEMS */}
       <h2
         style={{
-          fontSize: 26,
-          marginBottom: 16,
+          fontSize: 28,
+          marginBottom: 18,
           color: OM_ACCENT,
           fontWeight: 800,
         }}
@@ -175,16 +175,16 @@ export function MenuCard({ restaurant, items }) {
         <p style={{ fontSize: 15 }}>No menu items available.</p>
       )}
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
         {items.map((item) => (
           <div
             key={item.id}
             style={{
-              padding: 16,
+              padding: 18,
               borderRadius: 16,
               background: OM_CARD,
               border: `1px solid ${OM_ACCENT}33`,
-              boxShadow: "0 4px 10px rgba(0,0,0,0.05)",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
             }}
           >
             <h3
