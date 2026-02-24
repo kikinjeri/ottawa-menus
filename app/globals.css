@@ -5,34 +5,32 @@
 
 /* Tailwind must come immediately after font imports */
 @import "tailwindcss";
-
-/* --------------------------------------------------
-   GLOBAL VARIABLES (theme)
--------------------------------------------------- */
 :root {
-  /* Brand accent (replaces dark orange) */
-  --accent: #821D2E;            /* deep maroon */
-  --accent-light: #A12A3D;      /* lighter maroon */
+  /* --- Cinematic Warm Neutral Palette (Refined) --- */
 
-  /* Existing palette you want to KEEP */
-  --warm-yellow: #F7D488;       /* highlight */
-  --warm-orange: #E8A75D;       /* secondary accent */
+  /* Primary brand accent */
+  --accent: #7A2E2E;            /* deep oxide red */
+  --accent-light: #C46A3B;      /* burnt sienna */
 
-  /* Light blue/gray background you like */
-  --background: #f4f4f5;        /* soft blue-gray */
-  --foreground: #2B1B0F;        /* warm brown/black text */
+  /* Premium highlight (updated) */
+  --warm-yellow: #D4B483;       /* soft brass */
+  --warm-orange: #C46A3B;       /* warm sienna */
 
-  /* Restaurant card theme (same, but accent swapped) */
-  --primary: var(--accent);     /* card background */
+  /* Editorial background + text */
+  --background: #F7F4F2;        /* porcelain white */
+  --foreground: #1E1E1E;        /* charcoal ink */
+
+  /* Restaurant card theme */
+  --primary: var(--accent);
   --secondary: var(--warm-yellow);
   --text: #ffffff;
 
   /* Borders + shadows */
-  --card-border: #E6D8C8;
+  --card-border: #D9C7BD;       /* warm clay */
   --shadow-soft: rgba(0, 0, 0, 0.08);
   --shadow-strong: rgba(0, 0, 0, 0.15);
 
-  /* Future per-restaurant overrides */
+  /* Per-restaurant overrides */
   --restaurant-primary: var(--accent);
   --restaurant-secondary: var(--warm-yellow);
 }
