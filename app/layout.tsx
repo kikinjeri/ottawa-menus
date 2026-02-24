@@ -28,10 +28,6 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
-
-        <footer className="w-full text-center py-6 text-sm text-[var(--foreground)] opacity-80">
-          Ottawa-menus by M. George
-        </footer>
       </body>
     </html>
   );

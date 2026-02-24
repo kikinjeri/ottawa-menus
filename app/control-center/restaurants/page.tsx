@@ -192,10 +192,10 @@ export default function RestaurantsControlPage() {
                   href={`/generate-card?id=${restaurant.id}`}
                   target="_blank"
                   className="flex-1 text-center px-4 py-2 rounded-lg font-medium 
-                             bg-[var(--accent)] text-white shadow-sm 
-                             hover:bg-[var(--accent-light)] transition-all duration-200"
+               bg-[var(--accent)] text-white shadow-sm 
+               hover:bg-[var(--accent-light)] transition-all duration-200"
                 >
-                  Preview
+                  Preview / Edit
                 </a>
 
                 <button
@@ -207,8 +207,8 @@ export default function RestaurantsControlPage() {
                     alert("Posted to Bluesky!");
                   }}
                   className="flex-1 text-center px-4 py-2 rounded-lg font-medium 
-                             bg-black text-white shadow-sm 
-                             hover:bg-gray-800 transition-all duration-200"
+               bg-black text-white shadow-sm 
+               hover:bg-gray-800 transition-all duration-200"
                 >
                   Post
                 </button>
@@ -217,11 +217,6 @@ export default function RestaurantsControlPage() {
           ))}
         </div>
       </main>
-
-      {/* FOOTER */}
-      <footer className="w-full text-center py-6 text-sm text-[var(--foreground)] opacity-80">
-        Ottawa-menus by M.George
-      </footer>
     </div>
   );
 }
