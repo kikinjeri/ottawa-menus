@@ -25,16 +25,16 @@ export default async function SampleMenuCardPage(props: {
     );
   }
 
-  // --- ACCESSIBLE PALETTE ---
+  // --- REFINED, SOFTER, ACCESSIBLE PALETTE ---
   const palette = {
-    primary: "#3A0F0F", // deep burgundy
-    text: "#F8EDE3", // warm beige, AAA contrast
-    muted: "#E8D6C4", // slightly darker beige
-    secondary: "#FFB36B", // warm orange accent
-    divider: "rgba(255,255,255,0.22)",
+    primary: "#2E0C0C",
+    text: "#F4EDE6",
+    muted: "#E3D6CC",
+    secondary: "#F5A96A",
+    divider: "rgba(255,255,255,0.18)",
   };
 
-  // Categories to exclude
+  // Categories to exclude (including alcohol)
   const excluded = [
     "drinks",
     "drink",
@@ -43,9 +43,18 @@ export default async function SampleMenuCardPage(props: {
     "beverages",
     "smoothies",
     "milkshakes",
+    "alcohol",
+    "beer",
+    "wine",
+    "cocktails",
+    "liquor",
+    "spirits",
+    "bar",
+    "happy hour",
+    "alcoholic beverages",
   ];
 
-  // Human-friendly category ordering
+  // Updated human-friendly category ordering
   const categoryOrder = [
     "Breakfast",
     "Brunch",
@@ -54,6 +63,8 @@ export default async function SampleMenuCardPage(props: {
     "Small Plates",
     "Soups",
     "Salads",
+    "Sides",
+    "Extras",
     "Sandwiches",
     "Burgers",
     "Wraps",
@@ -64,8 +75,6 @@ export default async function SampleMenuCardPage(props: {
     "Specials",
     "Combos",
     "Platters",
-    "Sides",
-    "Extras",
   ].map((c) => c.toLowerCase());
 
   // Extract categories in original menu order
@@ -100,8 +109,11 @@ export default async function SampleMenuCardPage(props: {
     categories[cat] = items.filter((item) => item.category?.trim() === cat);
   });
 
+  // LIMIT TO MAX 3 CATEGORIES
+  const limitedCategories = orderedCategories.slice(0, 3);
+
   // For each category, pick up to 3 items
-  const curatedCategories = orderedCategories.map((cat) => {
+  const curatedCategories = limitedCategories.map((cat) => {
     const shuffled = [...categories[cat]].sort(() => Math.random() - 0.5);
     return {
       category: cat,
@@ -137,7 +149,7 @@ export default async function SampleMenuCardPage(props: {
   return (
     <div
       style={{
-        maxWidth: "480px",
+        maxWidth: "600px",
         margin: "1.5rem auto",
         padding: "1.25rem",
         background: palette.primary,
@@ -164,7 +176,38 @@ export default async function SampleMenuCardPage(props: {
         {restaurant.address}, {restaurant.city} • {restaurant.phone}
       </p>
 
-      {/* LINKS (accessible + distinguishable) */}
+      {/* NEIGHBOURHOOD (Option C placement) */}
+      {restaurant.neighborhood && (
+        <p
+          style={{
+            fontSize: "0.88rem",
+            marginBottom: "0.35rem",
+            color: palette.text,
+          }}
+        >
+          📍 <strong>Neighbourhood:</strong> {restaurant.neighborhood}
+        </p>
+      )}
+
+      {/* SERVES ALCOHOL BADGE */}
+      {restaurant.serves_alcohol && (
+        <div
+          style={{
+            display: "inline-block",
+            marginBottom: "0.5rem",
+            padding: "0.15rem 0.5rem",
+            background: "rgba(255,255,255,0.12)",
+            borderRadius: "0.35rem",
+            fontSize: "0.78rem",
+            fontWeight: 600,
+            color: palette.text,
+          }}
+        >
+          🍷 Serves Alcohol
+        </div>
+      )}
+
+      {/* LINKS */}
       <p
         style={{
           fontSize: "0.88rem",
@@ -314,7 +357,7 @@ export default async function SampleMenuCardPage(props: {
             right: "0.5rem",
             bottom: "0.25rem",
             fontSize: "0.7rem",
-            opacity: 0.28,
+            opacity: 0.22,
             pointerEvents: "none",
             userSelect: "none",
           }}
