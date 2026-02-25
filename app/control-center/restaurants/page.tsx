@@ -1,113 +1,60 @@
-"use client";
+import { createClient } from "@/utils/supabase/server";
 
-import { useEffect, useState } from "react";
+export default async function RestaurantsPage() {
+  const supabase = await createClient();
 
-interface Restaurant {
-  id: string;
-  name: string;
-  address?: string;
-  phone?: string;
-  neighbourhood?: string;
-  categories?: string[];
-  delivery_platforms?: string[];
-}
+  // Fetch only the fields needed for the list
+  const { data: restaurants, error } = await supabase
+    .from("restaurants")
+    .select("id, name, neighbourhood, phone")
+    .order("name", { ascending: true });
 
-export default function RestaurantsControlPage() {
-  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
-  const [query, setQuery] = useState("");
-
-  useEffect(() => {
-    async function load() {
-      const res = await fetch("/api/restaurants", { cache: "no-store" });
-      const data = await res.json();
-      setRestaurants(data);
-    }
-    load();
-  }, []);
-
-  const filtered = restaurants.filter((r) => {
-    const q = query.toLowerCase();
-    return (
-      r.name.toLowerCase().includes(q) ||
-      r.neighbourhood?.toLowerCase().includes(q) ||
-      r.categories?.join(" ").toLowerCase().includes(q)
-    );
-  });
+  if (error) {
+    console.error("Error loading restaurants:", error);
+    return <div className="p-10">Failed to load restaurants.</div>;
+  }
 
   return (
-    <div className="flex flex-col gap-6 p-6">
-      {/* Search */}
-      <div className="flex justify-center">
-        <input
-          type="text"
-          placeholder="Search restaurants or cuisine"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="w-full max-w-md px-4 py-3 border rounded-lg shadow-sm"
-        />
-      </div>
+    <div className="p-10 max-w-4xl mx-auto">
+      <h1 className="text-3xl font-bold mb-6">Restaurants</h1>
 
-      {/* Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filtered.map((restaurant) => (
-          <div
-            key={restaurant.id}
-            className="border rounded-xl p-5 shadow-sm bg-white flex flex-col justify-between h-full"
-          >
-            <div className="space-y-2">
-              <h2 className="text-xl font-semibold">{restaurant.name}</h2>
+      <div className="overflow-hidden rounded-xl border border-gray-300">
+        <table className="w-full text-left">
+          <thead className="bg-gray-100 border-b">
+            <tr>
+              <th className="p-3 font-semibold">Name</th>
+              <th className="p-3 font-semibold">Neighbourhood</th>
+              <th className="p-3 font-semibold">Phone</th>
+              <th className="p-3 font-semibold w-40">Actions</th>
+            </tr>
+          </thead>
 
-              {restaurant.neighbourhood && (
-                <p className="text-sm text-gray-600">
-                  {restaurant.neighbourhood}
-                </p>
-              )}
+          <tbody>
+            {restaurants?.map((r) => (
+              <tr key={r.id} className="border-b hover:bg-gray-50">
+                <td className="p-3">{r.name}</td>
+                <td className="p-3">{r.neighbourhood || "—"}</td>
+                <td className="p-3">{r.phone || "—"}</td>
 
-              {restaurant.categories?.length > 0 && (
-                <p className="text-sm text-gray-700">
-                  Cuisine: {restaurant.categories.join(", ")}
-                </p>
-              )}
+                <td className="p-3 flex gap-2">
+                  <a
+                    href={`/generate-card?id=${r.id}`}
+                    className="px-3 py-1 rounded bg-blue-600 text-white text-sm"
+                  >
+                    Preview
+                  </a>
 
-              {restaurant.address && (
-                <p className="text-sm text-gray-700">📍 {restaurant.address}</p>
-              )}
-
-              {restaurant.phone && (
-                <p className="text-sm text-gray-700">☎️ {restaurant.phone}</p>
-              )}
-
-              {restaurant.delivery_platforms?.length > 0 && (
-                <p className="text-sm text-gray-700">
-                  Delivery: {restaurant.delivery_platforms.join(", ")}
-                </p>
-              )}
-            </div>
-
-            <div className="flex gap-2 mt-4">
-              <a
-                href={`/api/generate-card?id=${restaurant.id}`}
-                target="_blank"
-                className="btn btn-primary flex-1 text-center"
-              >
-                Preview
-              </a>
-
-              <button
-                onClick={async () => {
-                  await fetch("/api/bsky/post-restaurant", {
-                    method: "POST",
-                    body: JSON.stringify({ id: restaurant.id }),
-                  });
-                  alert("Posted to Bluesky!");
-                }}
-                className="btn btn-secondary flex-1"
-              >
-                Post
-              </button>
-            </div>
-          </div>
-        ))}
+                  <a
+                    href={`/control-center/restaurants/${r.id}`}
+                    className="px-3 py-1 rounded bg-gray-800 text-white text-sm"
+                  >
+                    Edit
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

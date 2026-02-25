@@ -1,24 +1,41 @@
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
 
-/* --------------------------------------------------
-   GLOBAL VARIABLES (theme)
--------------------------------------------------- */
+
 :root {
-  --accent: #0a1a2f;
-  --accent-light: #1c2f4a;
-  --gold: #f5c26b;
-  --text-light: #ffffff;
-  --text-dark: #1c1c1c;
+  /* --- Cinematic Warm Neutral Palette --- */
 
-  --background: #ffffff;
-  --foreground: #0a1a2f;
+:root {
+  /* --- Cinematic Warm Neutral Palette (Refined) --- */
+
+  /* Primary brand accent */
+  --accent: #7A2E2E;            /* deep oxide red */
+  --accent-light: #C46A3B;      /* burnt sienna */
+
+  /* Premium highlight (updated) */
+  --warm-yellow: #D4B483;       /* soft brass */
+  --warm-orange: #C46A3B;       /* warm sienna */
+
+  /* Editorial background + text */
+  --background: #F7F4F2;        /* porcelain white */
+  --foreground: #1E1E1E;        /* charcoal ink */
 
   /* Restaurant card theme */
-  --primary: #0a1a2f;
-  --secondary: #f5c26b;
+  --primary: var(--accent);
+  --secondary: var(--warm-yellow);
   --text: #ffffff;
+
+  /* Borders + shadows */
+  --card-border: #D9C7BD;       /* warm clay */
+  --shadow-soft: rgba(0, 0, 0, 0.08);
+  --shadow-strong: rgba(0, 0, 0, 0.15);
+
+  /* Per-restaurant overrides */
+  --restaurant-primary: var(--accent);
+  --restaurant-secondary: var(--warm-yellow);
 }
+
+
+
 
 /* --------------------------------------------------
    GLOBAL BASE STYLES
@@ -214,4 +231,5 @@ html, body {
   .menu-item {
     max-width: 100%;
   }
+}
 }
