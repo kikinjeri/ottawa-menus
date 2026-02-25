@@ -1,4 +1,4 @@
-export interface WebsiteLookupResult {
+/*export interface WebsiteLookupResult {
   website: string | null;
   phone: string | null;
 }
@@ -43,4 +43,4 @@ function isLikelyWebsite(url: string): boolean {
   if (url.includes("tripadvisor")) return false;
   if (url.includes("facebook.com")) return false;
   return true;
-}
+}*/
