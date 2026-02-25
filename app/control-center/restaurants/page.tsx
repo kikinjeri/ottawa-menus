@@ -40,8 +40,17 @@ export default async function RestaurantsPage() {
                   <a
                     href={`/generate-card?id=${r.id}`}
                     className="px-3 py-1 rounded bg-blue-600 text-white text-sm"
+                    target="_blank"
                   >
-                    Preview
+                    Menu Card
+                  </a>
+
+                  <a
+                    href={`/generate-sample-card?id=${r.id}`}
+                    className="px-3 py-1 rounded bg-indigo-600 text-white text-sm"
+                    target="_blank"
+                  >
+                    Sample Menu
                   </a>
 
                   <a

@@ -1,59 +1,18 @@
-@import "tailwindcss";
-
-
-:root {
-  /* --- Cinematic Warm Neutral Palette --- */
-
-:root {
-  /* --- Cinematic Warm Neutral Palette (Refined) --- */
-
-  /* Primary brand accent */
-  --accent: #7A2E2E;            /* deep oxide red */
-  --accent-light: #C46A3B;      /* burnt sienna */
-
-  /* Premium highlight (updated) */
-  --warm-yellow: #D4B483;       /* soft brass */
-  --warm-orange: #C46A3B;       /* warm sienna */
-
-  /* Editorial background + text */
-  --background: #F7F4F2;        /* porcelain white */
-  --foreground: #1E1E1E;        /* charcoal ink */
-
-  /* Restaurant card theme */
-  --primary: var(--accent);
-  --secondary: var(--warm-yellow);
-  --text: #ffffff;
-
-  /* Borders + shadows */
-  --card-border: #D9C7BD;       /* warm clay */
-  --shadow-soft: rgba(0, 0, 0, 0.08);
-  --shadow-strong: rgba(0, 0, 0, 0.15);
-
-  /* Per-restaurant overrides */
-  --restaurant-primary: var(--accent);
-  --restaurant-secondary: var(--warm-yellow);
-}
-
-
-
-
 /* --------------------------------------------------
-   GLOBAL BASE STYLES
+   RESTAURANT CARD THEME VARIABLES
+   (These get overridden per restaurant)
 -------------------------------------------------- */
-html, body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: 'Inter', system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  line-height: 1.6;
-  font-size: 16px;
+
+:root {
+  --primary: #7A2E2E;      /* fallback */
+  --secondary: #D4B483;    /* fallback */
+  --text: #ffffff;         /* fallback */
 }
 
 /* --------------------------------------------------
-   RESTAURANT CARD STYLES
+   RESTAURANT CARD BASE STYLES
 -------------------------------------------------- */
+
 .restaurant-card {
   width: 100%;
   max-width: 480px;
@@ -184,11 +143,6 @@ html, body {
   margin-top: 1.5rem;
 }
 
-/* Remove blank rectangle */
-.image-slot {
-  display: none;
-}
-
 /* Footer */
 .card-footer {
   margin-top: 1.25rem;
@@ -198,30 +152,7 @@ html, body {
   opacity: 0.85;
 }
 
-.card-footer .footer-handle {
-  display: none;
-}
-
-/* --------------------------------------------------
-   CONTROL CENTER UI
--------------------------------------------------- */
-.dashboard-card {
-  border: 1px solid #e5e7eb;
-  background: white;
-  border-radius: 1rem;
-  padding: 1.5rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.dashboard-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
-}
-
-/* --------------------------------------------------
-   MOBILE OVERRIDES
--------------------------------------------------- */
+/* Mobile */
 @media (max-width: 480px) {
   .restaurant-card {
     padding: 1rem;
@@ -231,5 +162,4 @@ html, body {
   .menu-item {
     max-width: 100%;
   }
-}
 }
