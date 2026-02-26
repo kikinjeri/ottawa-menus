@@ -3,7 +3,9 @@ import { createClient } from "@/utils/supabase/server";
 export default async function RestaurantsPage() {
   const supabase = await createClient();
 
-  // Fetch only the fields needed for the list
+  // Always use the correct origin for preview links
+  const base = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+
   const { data: restaurants, error } = await supabase
     .from("restaurants")
     .select("id, name, neighbourhood, phone")
@@ -37,22 +39,25 @@ export default async function RestaurantsPage() {
                 <td className="p-3">{r.phone || "—"}</td>
 
                 <td className="p-3 flex gap-2">
+                  {/* Full Menu Card */}
                   <a
-                    href={`/generate-card?id=${r.id}`}
+                    href={`${base}/generate-card?id=${r.id}`}
                     className="px-3 py-1 rounded bg-blue-600 text-white text-sm"
                     target="_blank"
                   >
                     Menu Card
                   </a>
 
+                  {/* Sample Menu Card */}
                   <a
-                    href={`/generate-sample-card?id=${r.id}`}
+                    href={`${base}/generate-sample-card?id=${r.id}`}
                     className="px-3 py-1 rounded bg-indigo-600 text-white text-sm"
                     target="_blank"
                   >
                     Sample Menu
                   </a>
 
+                  {/* Edit */}
                   <a
                     href={`/control-center/restaurants/${r.id}`}
                     className="px-3 py-1 rounded bg-gray-800 text-white text-sm"

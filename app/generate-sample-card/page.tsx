@@ -1,370 +1,184 @@
-import { getRestaurantById } from "@/lib/db/restaurants";
-import { getMenuItemsForRestaurant } from "@/lib/db/menuItems";
+"use client";
 
-export default async function SampleMenuCardPage(props: {
-  searchParams: Promise<{ id?: string }>;
-}) {
-  const { id } = await props.searchParams;
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { createClient } from "@/utils/supabase/client";
+import "@/styles/styles.css";
 
-  if (!id) {
-    return (
-      <div className="p-10 text-center">
-        <h1 className="text-2xl font-bold">Missing restaurant ID</h1>
-      </div>
-    );
+export default function GenerateSampleCard() {
+  const supabase = createClient();
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+
+  const [restaurant, setRestaurant] = useState(null);
+
+  useEffect(() => {
+    if (!id) return;
+
+    async function fetchRestaurant() {
+      const { data } = await supabase
+        .from("restaurants")
+        .select(
+          `
+          *,
+          menu_items (*)
+        `,
+        )
+        .eq("id", id)
+        .single();
+
+      setRestaurant(data);
+    }
+
+    fetchRestaurant();
+  }, [id]);
+
+  if (!id) return <p>Missing restaurant id.</p>;
+  if (!restaurant) return <p>Loading…</p>;
+
+  // ⭐ Safe fallback for missing menu_items
+  const items = Array.isArray(restaurant.menu_items)
+    ? restaurant.menu_items
+    : [];
+
+  // Contrast correction
+  function getContrastColor(hex) {
+    if (!hex) return "#000";
+    const c = hex.replace("#", "");
+    const r = parseInt(c.substring(0, 2), 16);
+    const g = parseInt(c.substring(2, 4), 16);
+    const b = parseInt(c.substring(4, 6), 16);
+    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+    return luminance > 0.6 ? "#000" : "#fff";
   }
 
-  const restaurant = await getRestaurantById(id);
-  const items = await getMenuItemsForRestaurant(id);
+  const primary = restaurant.primary_color || "#333";
+  const secondary = restaurant.secondary_color || "#666";
+  const textColor = getContrastColor(restaurant.background_color);
 
-  if (!restaurant) {
-    return (
-      <div className="p-10 text-center">
-        <h1 className="text-2xl font-bold">Restaurant not found</h1>
-      </div>
-    );
-  }
-
-  // --- REFINED, SOFTER, ACCESSIBLE PALETTE ---
-  const palette = {
-    primary: "#2E0C0C",
-    text: "#F4EDE6",
-    muted: "#E3D6CC",
-    secondary: "#F5A96A",
-    divider: "rgba(255,255,255,0.18)",
-  };
-
-  // Categories to exclude (including alcohol)
-  const excluded = [
-    "drinks",
-    "drink",
-    "dessert",
-    "desserts",
-    "beverages",
-    "smoothies",
-    "milkshakes",
-    "alcohol",
-    "beer",
-    "wine",
-    "cocktails",
-    "liquor",
-    "spirits",
-    "bar",
-    "happy hour",
-    "alcoholic beverages",
-  ];
-
-  // Updated human-friendly category ordering
+  // Sample menu logic
   const categoryOrder = [
     "Breakfast",
-    "Brunch",
     "Appetizers",
     "Starters",
-    "Small Plates",
-    "Soups",
-    "Salads",
-    "Sides",
-    "Extras",
-    "Sandwiches",
-    "Burgers",
-    "Wraps",
     "Lunch",
     "Mains",
-    "Entrees",
     "Dinner",
-    "Specials",
-    "Combos",
-    "Platters",
-  ].map((c) => c.toLowerCase());
-
-  // Extract categories in original menu order
-  const rawOrderedCategories: string[] = [];
-  items.forEach((item) => {
-    const cat = item.category?.trim();
-    if (!cat) return;
-
-    const normalized = cat.toLowerCase();
-    if (excluded.includes(normalized)) return;
-
-    if (!rawOrderedCategories.includes(cat)) {
-      rawOrderedCategories.push(cat);
-    }
-  });
-
-  // Sort categories using human-friendly order
-  const orderedCategories = [...rawOrderedCategories].sort((a, b) => {
-    const aIndex = categoryOrder.indexOf(a.toLowerCase());
-    const bIndex = categoryOrder.indexOf(b.toLowerCase());
-
-    if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
-    if (aIndex !== -1) return -1;
-    if (bIndex !== -1) return 1;
-
-    return rawOrderedCategories.indexOf(a) - rawOrderedCategories.indexOf(b);
-  });
-
-  // Build category → items map
-  const categories: Record<string, any[]> = {};
-  orderedCategories.forEach((cat) => {
-    categories[cat] = items.filter((item) => item.category?.trim() === cat);
-  });
-
-  // LIMIT TO MAX 3 CATEGORIES
-  const limitedCategories = orderedCategories.slice(0, 3);
-
-  // For each category, pick up to 3 items
-  const curatedCategories = limitedCategories.map((cat) => {
-    const shuffled = [...categories[cat]].sort(() => Math.random() - 0.5);
-    return {
-      category: cat,
-      items: shuffled.slice(0, 3),
-    };
-  });
-
-  // Intro sentence rotation
-  const intros = [
-    "A quick look at a few dishes from their menu.",
-    "Here are a few highlights from their menu today.",
-    "A small sample of what they’re serving right now.",
-    "A quick peek at some of their menu favourites.",
+    "Entrees",
+    "Sides",
+    "Desserts",
+    "Kids",
   ];
-  const intro = intros[Math.floor(Math.random() * intros.length)];
 
-  // Google Maps link
-  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-    `${restaurant.address}, ${restaurant.city}`,
-  )}`;
+  const filtered = items.filter(
+    (item) => !item.category?.toLowerCase().includes("drink"),
+  );
 
-  // Full menu link
-  const fullMenuUrl = `https://ottawa-menus.ca/generate-card?id=${id}`;
+  const sorted = [...filtered].sort((a, b) => {
+    const aIndex = categoryOrder.indexOf(a.category);
+    const bIndex = categoryOrder.indexOf(b.category);
+    return (aIndex === -1 ? 999 : aIndex) - (bIndex === -1 ? 999 : bIndex);
+  });
 
-  // Ordering link priority
-  const orderOnlineUrl =
-    restaurant.order_online_url ||
-    restaurant.uber_eats_url ||
-    restaurant.door_dash_url ||
-    restaurant.skip_the_dishes_url ||
-    null;
+  const grouped = sorted.reduce((acc, item) => {
+    if (!acc[item.category]) acc[item.category] = [];
+    acc[item.category].push(item);
+    return acc;
+  }, {});
+
+  const limitedCategories = Object.keys(grouped).slice(0, 3);
 
   return (
-    <div
-      style={{
-        maxWidth: "600px",
-        margin: "1.5rem auto",
-        padding: "1.25rem",
-        background: palette.primary,
-        color: palette.text,
-        borderRadius: "0.75rem",
-        border: `2px solid ${palette.secondary}`,
-        boxShadow: "0 0 30px rgba(0,0,0,0.35)",
-        position: "relative",
-      }}
-    >
-      {/* HEADER */}
-      <h1
+    <main>
+      <article
+        className="restaurant-card"
         style={{
-          fontSize: "1.45rem",
-          fontWeight: 800,
-          color: palette.secondary,
-          marginBottom: "0.25rem",
+          "--primary": primary,
+          "--secondary": secondary,
+          "--text": textColor,
         }}
       >
-        {restaurant.name}
-      </h1>
+        <header className="restaurant-header">
+          <h1>{restaurant.name}</h1>
+          {restaurant.neighbourhood && (
+            <p className="neighbourhood">{restaurant.neighbourhood}</p>
+          )}
+        </header>
 
-      <p style={{ fontSize: "0.92rem", marginBottom: "0.25rem" }}>
-        {restaurant.address}, {restaurant.city} • {restaurant.phone}
-      </p>
-
-      {/* NEIGHBOURHOOD (Option C placement) */}
-      {restaurant.neighborhood && (
-        <p
-          style={{
-            fontSize: "0.88rem",
-            marginBottom: "0.35rem",
-            color: palette.text,
-          }}
-        >
-          📍 <strong>Neighbourhood:</strong> {restaurant.neighborhood}
-        </p>
-      )}
-
-      {/* SERVES ALCOHOL BADGE */}
-      {restaurant.serves_alcohol && (
-        <div
-          style={{
-            display: "inline-block",
-            marginBottom: "0.5rem",
-            padding: "0.15rem 0.5rem",
-            background: "rgba(255,255,255,0.12)",
-            borderRadius: "0.35rem",
-            fontSize: "0.78rem",
-            fontWeight: 600,
-            color: palette.text,
-          }}
-        >
-          🍷 Serves Alcohol
-        </div>
-      )}
-
-      {/* LINKS */}
-      <p
-        style={{
-          fontSize: "0.88rem",
-          marginBottom: "0.75rem",
-          color: palette.text,
-        }}
-      >
-        <a
-          href={mapsUrl}
-          target="_blank"
-          style={{
-            color: palette.secondary,
-            textDecoration: "underline",
-            fontWeight: 600,
-          }}
-        >
-          Google Maps
-        </a>
-
-        {orderOnlineUrl && (
-          <>
-            {" • "}
-            <a
-              href={orderOnlineUrl}
-              target="_blank"
-              style={{
-                color: palette.secondary,
-                textDecoration: "underline",
-                fontWeight: 600,
-              }}
-            >
-              Order Online
-            </a>
-          </>
+        {restaurant.description && (
+          <section className="restaurant-description">
+            <p>{restaurant.description}</p>
+          </section>
         )}
 
-        {" • "}
-        <a
-          href={fullMenuUrl}
-          target="_blank"
-          style={{
-            color: palette.secondary,
-            textDecoration: "underline",
-            fontWeight: 600,
-          }}
-        >
-          Full Menu
-        </a>
+        <section className="restaurant-info">
+          <div className="info-left">
+            {restaurant.address && (
+              <p className="address">{restaurant.address}</p>
+            )}
+            {restaurant.hours && <p className="hours">{restaurant.hours}</p>}
+            {restaurant.phone && <p className="phone">{restaurant.phone}</p>}
+            {restaurant.email && <p className="email">{restaurant.email}</p>}
+          </div>
 
-        {restaurant.website_url && (
-          <>
-            {" • "}
-            <a
-              href={restaurant.website_url}
-              target="_blank"
-              style={{
-                color: palette.secondary,
-                textDecoration: "underline",
-                fontWeight: 600,
-              }}
-            >
-              Website
-            </a>
-          </>
-        )}
-      </p>
-
-      {/* INTRO */}
-      <p
-        style={{
-          marginTop: "0.5rem",
-          marginBottom: "1rem",
-          fontStyle: "italic",
-          fontSize: "0.95rem",
-          color: palette.muted,
-        }}
-      >
-        {intro}
-      </p>
-
-      {/* CURATED SAMPLE */}
-      {curatedCategories.map(({ category, items }) => (
-        <div key={category} style={{ marginBottom: "1rem" }}>
-          <h2
-            style={{
-              color: palette.secondary,
-              fontSize: "1.1rem",
-              fontWeight: 700,
-              marginBottom: "0.35rem",
-            }}
-          >
-            {category}
-          </h2>
-
-          {items.map((item) => (
-            <div
-              key={item.id}
-              style={{
-                marginBottom: "0.4rem",
-                paddingBottom: "0.4rem",
-                borderBottom: `1px solid ${palette.divider}`,
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  fontSize: "0.95rem",
-                }}
+          <div className="info-right">
+            {restaurant.address && (
+              <a
+                className="map-link"
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                  restaurant.address,
+                )}`}
+                target="_blank"
               >
-                <strong>{item.name}</strong>
-                <span style={{ color: palette.secondary }}>{item.price}</span>
-              </div>
+                View on Map
+              </a>
+            )}
 
-              {item.description && (
-                <p
-                  style={{
-                    margin: 0,
-                    opacity: 0.9,
-                    fontSize: "0.82rem",
-                    lineHeight: 1.35,
-                    color: palette.muted,
-                  }}
-                >
-                  {item.description}
-                </p>
-              )}
-            </div>
+            {restaurant.serves_alcohol && (
+              <span className="tag alcohol">Serves Alcohol</span>
+            )}
+
+            {restaurant.website && (
+              <a className="website" href={restaurant.website} target="_blank">
+                Website
+              </a>
+            )}
+          </div>
+        </section>
+
+        <section className="menu-section">
+          <h2>Sample Menu</h2>
+
+          {limitedCategories.length === 0 && (
+            <p className="empty-menu">Menu coming soon.</p>
+          )}
+
+          {limitedCategories.map((category) => (
+            <section key={category} className="menu-category">
+              <h3>{category}</h3>
+              <ul className="menu-items">
+                {grouped[category].slice(0, 3).map((item) => (
+                  <li key={item.id} className="menu-item">
+                    <div className="item-header">
+                      <span className="dish">{item.name}</span>
+                      {item.price && (
+                        <span className="price">{item.price}</span>
+                      )}
+                    </div>
+
+                    {item.description && (
+                      <p className="item-description">{item.description}</p>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </section>
           ))}
-        </div>
-      ))}
+        </section>
 
-      {/* FOOTER + WATERMARK */}
-      <footer
-        style={{
-          marginTop: "1.25rem",
-          textAlign: "center",
-          fontSize: "0.8rem",
-          opacity: 0.75,
-          position: "relative",
-        }}
-      >
-        Ottawa Sample Menu Card
-        <span
-          style={{
-            position: "absolute",
-            right: "0.5rem",
-            bottom: "0.25rem",
-            fontSize: "0.7rem",
-            opacity: 0.22,
-            pointerEvents: "none",
-            userSelect: "none",
-          }}
-        >
-          M. George
-        </span>
-      </footer>
-    </div>
+        <footer className="card-footer">Ottawa Menus</footer>
+        <div className="card-watermark">M. George</div>
+      </article>
+    </main>
   );
 }
