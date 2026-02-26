@@ -1,11 +1,40 @@
 export default function HomePage() {
   return (
     <main className="bg-[#FAF7F3] text-[#2A2A2A] min-h-screen">
+      {/* Navigation */}
+      <nav className="bg-[#FAF7F3] border-b border-[#E5D8C8]">
+        <div className="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
+          {/* Brand — biggest text */}
+          <a
+            href="/home"
+            className="text-5xl font-extrabold tracking-tight text-[#B9472E]"
+          >
+            Ottawa‑Menus
+          </a>
+
+          <div className="flex gap-8 text-lg font-bold">
+            {/* Disabled Home link */}
+            <span className="text-[#B9472E] cursor-default">Home</span>
+
+            <a href="/about" className="hover:text-[#B9472E] transition">
+              About
+            </a>
+
+            <a
+              href="/control-center/restaurants"
+              className="hover:text-[#B9472E] transition"
+            >
+              Control Center
+            </a>
+          </div>
+        </div>
+      </nav>
+
       {/* Hero Section */}
       <section className="max-w-5xl mx-auto px-6 pt-20 pb-24 text-center">
-        <h1 className="text-5xl font-bold tracking-tight text-[#2A2A2A]">
+        <h2 className="text-5xl font-bold tracking-tight text-[#2A2A2A]">
           Modern, Accessible Menus for Ottawa Restaurants
-        </h1>
+        </h2>
 
         <p className="mt-6 text-xl leading-relaxed text-[#4A4A4A] max-w-3xl mx-auto">
           Ottawa‑Menus helps local restaurants replace outdated PDFs and
@@ -50,8 +79,9 @@ export default function HomePage() {
               SEO Optimized
             </h3>
             <p className="mt-3 text-[#4A4A4A]">
-              Search engines can index your menu items, helping customers
-              discover you.
+              Search engines can index your menu items and neighborhood,
+              improving your google ranking so customers can find you more
+              easily.
             </p>
           </div>
 
