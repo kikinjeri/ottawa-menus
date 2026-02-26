@@ -41,8 +41,8 @@ export default function AboutPage() {
 
             <p className="text-lg leading-relaxed">
               I’m <strong className="font-semibold">Mwihaki</strong>, a web
-              developer based in Ottawa focused on accessibility, editorial
-              design, and SEO. I created Ottawa‑Menus to give local restaurants
+              developer based in Ottawa focused on accessibility and Service Engine Optimisation in web
+              design. I created Ottawa‑Menus to give local restaurants
               a modern, inclusive way to share their menus online — one that
               reflects the care they put into their food and helps customers
               discover them more easily.

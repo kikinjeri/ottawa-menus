@@ -1,10 +1,8 @@
 import { createClient } from "@/utils/supabase/server";
+import Link from "next/link";
 
 export default async function RestaurantsPage() {
   const supabase = await createClient();
-
-  // Always use the correct origin for preview links
-  const base = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
   const { data: restaurants, error } = await supabase
     .from("restaurants")
@@ -18,6 +16,18 @@ export default async function RestaurantsPage() {
 
   return (
     <div className="p-10 max-w-4xl mx-auto">
+      <nav className="flex items-center justify-between mb-8 border-b pb-4">
+        <div className="font-semibold text-lg">Ottawa-Menus Control Center</div>
+        <div className="flex gap-4 text-sm">
+          <Link href="/home" className="text-blue-700 hover:underline">
+            Home
+          </Link>
+          <Link href="/about" className="text-blue-700 hover:underline">
+            About
+          </Link>
+        </div>
+      </nav>
+
       <h1 className="text-3xl font-bold mb-6">Restaurants</h1>
 
       <div className="overflow-hidden rounded-xl border border-gray-300">
@@ -39,25 +49,22 @@ export default async function RestaurantsPage() {
                 <td className="p-3">{r.phone || "—"}</td>
 
                 <td className="p-3 flex gap-2">
-                  {/* Full Menu Card */}
                   <a
-                    href={`${base}/generate-card?id=${r.id}`}
+                    href={`/generate-card?id=${r.id}`}
                     className="px-3 py-1 rounded bg-blue-600 text-white text-sm"
                     target="_blank"
                   >
                     Menu Card
                   </a>
 
-                  {/* Sample Menu Card */}
                   <a
-                    href={`${base}/generate-sample-card?id=${r.id}`}
+                    href={`/generate-sample-card?id=${r.id}`}
                     className="px-3 py-1 rounded bg-indigo-600 text-white text-sm"
                     target="_blank"
                   >
                     Sample Menu
                   </a>
 
-                  {/* Edit */}
                   <a
                     href={`/control-center/restaurants/${r.id}`}
                     className="px-3 py-1 rounded bg-gray-800 text-white text-sm"

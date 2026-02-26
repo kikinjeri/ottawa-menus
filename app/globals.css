@@ -5,38 +5,34 @@
 
 /* Tailwind must come immediately after font imports */
 @import "tailwindcss";
+
+/* --------------------------------------------------
+   CINEMA-LIKE CREAM + NAVY PALETTE
+-------------------------------------------------- */
 :root {
-  /* --- Cinematic Warm Neutral Palette (Refined) --- */
+  /* Core palette */
+  --primary: #0A2342;        /* navy */
+  --secondary: #FDF7EE;      /* cream */
+  --text: #222222;           /* charcoal */
 
-  /* Primary brand accent */
-  --accent: #7A2E2E;            /* deep oxide red */
-  --accent-light: #C46A3B;      /* burnt sienna */
+  /* Supporting */
+  --warm-yellow: #F2C94C;
+  --border: #E5E1DA;
+  --text-secondary: #444444;
 
-  /* Premium highlight (updated) */
-  --warm-yellow: #D4B483;       /* soft brass */
-  --warm-orange: #C46A3B;       /* warm sienna */
+  /* Global background + foreground */
+  --background: var(--secondary);
+  --foreground: var(--primary);
 
-  /* Editorial background + text */
-  --background: #F7F4F2;        /* porcelain white */
-  --foreground: #1E1E1E;        /* charcoal ink */
+  /* Restaurant overrides (unused for now) */
+  --restaurant-primary: var(--primary);
+  --restaurant-secondary: var(--secondary);
+  --restaurant-text: var(--text);
 
-  /* Restaurant card theme */
-  --primary: var(--accent);
-  --secondary: var(--warm-yellow);
-  --text: #ffffff;
-
-  /* Borders + shadows */
-  --card-border: #D9C7BD;       /* warm clay */
+  /* Shadows */
   --shadow-soft: rgba(0, 0, 0, 0.08);
   --shadow-strong: rgba(0, 0, 0, 0.15);
-
-  /* Per-restaurant overrides */
-  --restaurant-primary: var(--accent);
-  --restaurant-secondary: var(--warm-yellow);
 }
-
-
-
 
 /* --------------------------------------------------
    GLOBAL BASE STYLES
@@ -53,31 +49,31 @@ html, body {
 }
 
 /* --------------------------------------------------
-   RESTAURANT CARD STYLES
+   RESTAURANT CARD (FULL MENU — LIGHT THEME)
 -------------------------------------------------- */
 .restaurant-card {
   width: 100%;
   max-width: 480px;
   margin: 1.5rem auto;
   padding: 1.25rem;
-  background: var(--primary);
+  background: var(--secondary);
   color: var(--text);
   border-radius: 0.75rem;
-  border: 2px solid var(--secondary);
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.35);
+  border: 3px solid var(--primary);
+  box-shadow: 0 0 30px var(--shadow-strong);
 }
 
 /* Header */
 .card-header h1 {
   font-size: 1.8rem;
   font-weight: 800;
-  color: var(--secondary);
+  color: var(--primary);
   margin-bottom: 0.25rem;
 }
 
 .neighbourhood {
   font-size: 0.9rem;
-  color: var(--secondary);
+  color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -93,7 +89,7 @@ html, body {
 
 /* Info section */
 .info-section p strong {
-  color: var(--secondary);
+  color: var(--primary);
   font-weight: 600;
 }
 
@@ -104,7 +100,7 @@ html, body {
 }
 
 .menu-section h2 {
-  color: var(--secondary);
+  color: var(--primary);
   font-size: 1.2rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
@@ -116,24 +112,17 @@ html, body {
 }
 
 .category-title {
-  color: var(--secondary);
+  color: var(--primary);
   font-size: 1.1rem;
   font-weight: 700;
   margin-bottom: 0.25rem;
-}
-
-.category-list {
-  padding: 0;
-  margin: 0 auto;
-  display: inline-block;
-  text-align: left;
 }
 
 /* Menu items */
 .menu-item {
   margin-bottom: 0.5rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 1px solid var(--border);
   max-width: 420px;
 }
 
@@ -149,12 +138,11 @@ html, body {
 }
 
 .price {
-  color: var(--secondary);
+  color: var(--primary);
 }
 
 .item-description {
-  color: var(--text);
-  opacity: 0.75;
+  color: var(--text-secondary);
   font-size: 0.85rem;
   margin-top: 0.25rem;
   line-height: 1.4;
@@ -171,23 +159,11 @@ html, body {
 .tag {
   padding: 0.1rem 0.4rem;
   border-radius: 0.35rem;
-  background: rgba(255, 255, 255, 0.15);
-  color: var(--secondary);
+  background: var(--warm-yellow);
+  color: var(--foreground);
   font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-}
-
-/* Alcohol section */
-.alcohol-section {
-  border-top: 2px solid var(--secondary);
-  padding-top: 0.75rem;
-  margin-top: 1.5rem;
-}
-
-/* Remove blank rectangle */
-.image-slot {
-  display: none;
 }
 
 /* Footer */
@@ -195,12 +171,26 @@ html, body {
   margin-top: 1.25rem;
   text-align: center;
   font-size: 0.9rem;
-  color: var(--text);
-  opacity: 0.85;
+  color: var(--text-secondary);
 }
 
-.card-footer .footer-handle {
-  display: none;
+/* --------------------------------------------------
+   SAMPLE CARD (DARK NAVY THEME)
+-------------------------------------------------- */
+.sample-card {
+  background: var(--primary);
+  color: var(--secondary);
+  border: 3px solid var(--secondary);
+}
+
+.sample-card h1,
+.sample-card h2,
+.sample-card h3 {
+  color: var(--secondary);
+}
+
+.sample-card .price {
+  color: var(--warm-yellow);
 }
 
 /* --------------------------------------------------
@@ -226,7 +216,7 @@ html, body {
 @media (max-width: 480px) {
   .restaurant-card {
     padding: 1rem;
-    border-width: 1px;
+    border-width: 2px;
   }
 
   .menu-item {

@@ -16,12 +16,12 @@ export default function GenerateCard() {
     if (!id) return;
 
     async function fetchRestaurant() {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from("restaurants")
         .select(
           `
           *,
-          menu_items (*)
+          menu_items:menu_items!restaurant_id (*)
         `,
         )
         .eq("id", id)
@@ -40,21 +40,23 @@ export default function GenerateCard() {
     ? restaurant.menu_items
     : [];
 
-  function getContrastColor(hex?: string | null) {
-    if (!hex) return "#000";
-    const c = hex.replace("#", "");
-    const r = parseInt(c.substring(0, 2), 16);
-    const g = parseInt(c.substring(2, 4), 16);
-    const b = parseInt(c.substring(4, 6), 16);
-    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-    return luminance > 0.6 ? "#000" : "#fff";
-  }
+  const drinkCategories = [
+    "Drinks",
+    "Alcohol",
+    "Beverages",
+    "Cocktails",
+    "Wine",
+    "Beer",
+    "Liquor",
+    "Spirits",
+    "Martinis",
+    "Daiquiris",
+    "Mixed Drinks",
+    "Cider",
+    "Coolers",
+  ];
 
-  const primary = restaurant.primary_color || "#333";
-  const secondary = restaurant.secondary_color || "#666";
-  const textColor = getContrastColor(restaurant.background_color);
-
-  const categoryOrder = [
+  const editorialOrder = [
     "Breakfast",
     "Appetizers",
     "Starters",
@@ -64,32 +66,45 @@ export default function GenerateCard() {
     "Entrees",
     "Sides",
     "Desserts",
-    "Kids",
+    "Drinks",
   ];
 
-  const sortedItems = [...items].sort((a, b) => {
-    const aIndex = categoryOrder.indexOf(a.category);
-    const bIndex = categoryOrder.indexOf(b.category);
+  const drinkItems = items.filter((item: any) =>
+    drinkCategories.includes(item.category),
+  );
+
+  const nonDrinkItems = items.filter(
+    (item: any) => !drinkCategories.includes(item.category),
+  );
+
+  const sortedNonDrink = [...nonDrinkItems].sort((a, b) => {
+    const aIndex = editorialOrder.indexOf(a.category);
+    const bIndex = editorialOrder.indexOf(b.category);
     return (aIndex === -1 ? 999 : aIndex) - (bIndex === -1 ? 999 : bIndex);
   });
 
-  const grouped = sortedItems.reduce((acc: any, item: any) => {
-    if (!acc[item.category]) acc[item.category] = [];
-    acc[item.category].push(item);
-    return acc;
-  }, {});
+  const grouped: Record<string, any[]> = sortedNonDrink.reduce(
+    (acc: any, item: any) => {
+      const category = item.category || "Other";
+      if (!acc[category]) acc[category] = [];
+      acc[category].push(item);
+      return acc;
+    },
+    {},
+  );
+
+  if (restaurant.serves_alcohol && drinkItems.length > 0) {
+    grouped["Drinks"] = drinkItems;
+  }
+
+  const orderedCategories = editorialOrder.filter(
+    (cat) => grouped[cat] && grouped[cat].length > 0,
+  );
 
   return (
     <main>
-      <article
-        className="restaurant-card"
-        style={{
-          "--primary": primary,
-          "--secondary": secondary,
-          "--text": textColor,
-        }}
-      >
-        <header className="restaurant-header">
+      <article className="restaurant-card">
+        <header className="card-header">
           <h1>{restaurant.name}</h1>
           {restaurant.neighbourhood && (
             <p className="neighbourhood">{restaurant.neighbourhood}</p>
@@ -97,23 +112,34 @@ export default function GenerateCard() {
         </header>
 
         {restaurant.description && (
-          <section className="restaurant-description">
+          <section className="description">
             <p>{restaurant.description}</p>
           </section>
         )}
 
-        <section className="restaurant-info">
-          <div className="info-left">
-            {restaurant.address && (
-              <p className="address">{restaurant.address}</p>
-            )}
-            {restaurant.hours && <p className="hours">{restaurant.hours}</p>}
-            {restaurant.phone && <p className="phone">{restaurant.phone}</p>}
-            {restaurant.email && <p className="email">{restaurant.email}</p>}
-          </div>
+        <section className="info-section">
+          {restaurant.address && (
+            <p>
+              <strong>Address:</strong> {restaurant.address}
+            </p>
+          )}
+          {restaurant.hours && (
+            <p>
+              <strong>Hours:</strong> {restaurant.hours}
+            </p>
+          )}
+          {restaurant.phone && (
+            <p>
+              <strong>Phone:</strong> {restaurant.phone}</p>
+          )}
+          {restaurant.email && (
+            <p>
+              <strong>Email:</strong> {restaurant.email}
+            </p>
+          )}
 
-          <div className="info-right">
-            {restaurant.address && (
+          {restaurant.address && (
+            <p style={{ marginTop: "0.5rem" }}>
               <a
                 className="map-link"
                 href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
@@ -123,37 +149,43 @@ export default function GenerateCard() {
               >
                 View on Map
               </a>
-            )}
+            </p>
+          )}
 
-            {restaurant.serves_alcohol && (
-              <span className="tag alcohol">Serves Alcohol</span>
-            )}
+          {restaurant.serves_alcohol && (
+            <p className="tag alcohol">Serves Alcohol</p>
+          )}
 
-            {restaurant.website && (
-              <a className="website" href={restaurant.website} target="_blank">
-                Website
+          {restaurant.website && (
+            <p style={{ marginTop: "0.5rem" }}>
+              <a
+                className="website"
+                href={restaurant.website}
+                target="_blank"
+              >
+                View Restaurant Website
               </a>
-            )}
-          </div>
+            </p>
+          )}
         </section>
 
         <section className="menu-section">
           <h2>Menu</h2>
 
-          {Object.keys(grouped).length === 0 && (
+          {orderedCategories.length === 0 && (
             <p className="empty-menu">Menu coming soon.</p>
           )}
 
-          {Object.keys(grouped).map((category) => (
+          {orderedCategories.map((category) => (
             <section key={category} className="menu-category">
-              <h3>{category}</h3>
-              <ul className="menu-items">
+              <h3 className="category-title">{category}</h3>
+              <ul className="category-list">
                 {grouped[category].map((item: any) => (
                   <li key={item.id} className="menu-item">
                     <div className="item-header">
                       <span className="dish">{item.name}</span>
                       {item.price && (
-                        <span className="price">{item.price}</span>
+                        <span className="price">${item.price}</span>
                       )}
                     </div>
 
@@ -183,3 +215,4 @@ export default function GenerateCard() {
     </main>
   );
 }
+
