@@ -220,6 +220,19 @@ html, body {
   box-shadow: 0 6px 16px rgba(0,0,0,0.1);
 }
 
+.full-menu-link {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.view-full-menu {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+
 /* --------------------------------------------------
    MOBILE OVERRIDES
 -------------------------------------------------- */

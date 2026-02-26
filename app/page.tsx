@@ -1,65 +1,90 @@
-import Image from "next/image";
-
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <main className="min-h-screen bg-[#F7F3EB] text-[#0A1A2F] px-8 py-20">
+      <div className="max-w-4xl mx-auto space-y-16">
+        {/* HERO */}
+        <section className="space-y-6">
+          <h1 className="text-6xl font-extrabold tracking-tight">
+            Ottawa‑Menus
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-2xl leading-relaxed text-[#1A2C45] max-w-3xl">
+            A modern, accessible, search‑optimized platform that helps Ottawa’s
+            restaurants present their menus with clarity, confidence, and
+            professionalism. Built for owners who want a strong digital presence
+            without the complexity.
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
+        </section>
+
+        {/* VALUE PROPOSITION */}
+        <section className="space-y-4">
+          <h2 className="text-3xl font-semibold">
+            Built for real business impact
+          </h2>
+          <p className="text-lg leading-relaxed">
+            Customers judge a restaurant within seconds of landing on its
+            website. Ottawa‑Menus ensures that first impression is clean,
+            readable, mobile‑friendly, and aligned with modern accessibility
+            standards. No PDFs. No clutter. Just a beautiful, structured menu
+            that works everywhere.
+          </p>
+        </section>
+
+        {/* SEO SECTION */}
+        <section className="space-y-4">
+          <h2 className="text-3xl font-semibold">
+            Designed for Google visibility
+          </h2>
+          <p className="text-lg leading-relaxed">
+            Search engines reward clarity, structure, and accessibility.
+            Ottawa‑Menus uses semantic HTML, optimized headings, and clean
+            metadata to help your restaurant appear more prominently in Google
+            search results. A well‑structured menu isn’t just good design — it’s
+            good SEO.
+          </p>
+          <ul className="list-disc pl-6 space-y-2 text-lg">
+            <li>Readable, structured menu content Google can index</li>
+            <li>Fast‑loading pages that improve ranking signals</li>
+            <li>Accessible markup that meets WCAG AA/AAA standards</li>
+            <li>Consistent formatting that builds trust with customers</li>
+          </ul>
+        </section>
+
+        {/* ACCESSIBILITY SECTION */}
+        <section className="space-y-4">
+          <h2 className="text-3xl font-semibold">
+            Accessibility as a core principle
+          </h2>
+          <p className="text-lg leading-relaxed">
+            Every menu card is built with inclusive design: high contrast,
+            readable typography, keyboard navigation, and screen‑reader‑friendly
+            structure. Accessibility isn’t an afterthought — it’s a competitive
+            advantage.
+          </p>
+        </section>
+
+        {/* WHAT YOU CAN DO */}
+        <section className="space-y-4">
+          <h2 className="text-3xl font-semibold">
+            What you can do with Ottawa‑Menus
+          </h2>
+          <ul className="list-disc pl-6 space-y-2 text-lg">
+            <li>Create beautiful, structured menu cards instantly</li>
+            <li>Generate sample menus for social media and promotions</li>
+            <li>Update your business details and menu items anytime</li>
+            <li>Maintain a consistent, professional online presence</li>
+          </ul>
+        </section>
+
+        {/* CTA */}
+        <section className="pt-6">
           <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/control-center/restaurants"
+            className="inline-block bg-[#0A1A2F] text-[#F7F3EB] px-8 py-4 rounded-lg text-lg font-semibold hover:bg-[#13263F] transition"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
+            Go to Control Center →
           </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+        </section>
+      </div>
+    </main>
   );
 }

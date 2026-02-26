@@ -176,6 +176,18 @@ export default function GenerateCard() {
             </section>
           ))}
         </section>
+        {restaurant.website && (
+          <div className="full-menu-link">
+            <a
+              href={restaurant.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="view-full-menu"
+            >
+              View Full Menu on {restaurant.name}'s Website
+            </a>
+          </div>
+        )}
 
         <footer className="card-footer">Ottawa Menus</footer>
         <div className="card-watermark">M. George</div>
