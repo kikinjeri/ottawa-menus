@@ -53,7 +53,7 @@ export default function HomePage() {
         <div className="max-w-4xl mx-auto space-y-6 text-center">
           <h2 className="text-3xl font-bold text-[#2F4A6E] leading-snug">
             Our curated menus help customers disccover you on Google, make your
-            dishes easier to browse, an expose your menu to more customers.
+            dishes easier to browse, and expose your menu to more customers.
           </h2>
 
           <p className="text-lg text-[#1A2C45] leading-relaxed max-w-3xl mx-auto">
@@ -68,12 +68,12 @@ export default function HomePage() {
         <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16">
           <div className="space-y-4">
             <h3 className="text-2xl font-semibold text-[#0A1A2F]">
-              Generate Menus Instantly
+              Generate HTML Menus
             </h3>
             <p className="text-lg leading-relaxed text-[#1A2C45]">
-              Create clean, structured menu cards and sample menus in seconds —
+              Create clean, structured menu and sample menu-cards—
               perfect for your website, social media, or print. Every design is
-              consistent, readable, and built to convert customers.
+              consistent, readable, and built to bring you more customers.
             </p>
           </div>
 
@@ -82,9 +82,9 @@ export default function HomePage() {
               Update Items Easily
             </h3>
             <p className="text-lg leading-relaxed text-[#1A2C45]">
-              Add or adjust menu items anytime. Every update is instantly
+              Add or adjust menu items anytime. Every update is 
               optimized for Google indexing, helping customers discover your
-              dishes faster.
+              dishes faster and bring you more business.
             </p>
           </div>
         </div>
