@@ -6,8 +6,8 @@ export default function AboutPage() {
         About Ottawa‑Menus
       </h1>
 
-      {/* INTRO SECTION WITH IMAGE ON RIGHT */}
-      <section className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      {/* INTRO WITH IMAGE ON RIGHT */}
+      <section className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
         {/* TEXT */}
         <div className="space-y-6">
           <h2 className="text-3xl font-bold text-[#2F4A6E]">
@@ -32,9 +32,9 @@ export default function AboutPage() {
         {/* IMAGE */}
         <div className="flex justify-center">
           <img
-            src="/about.jpg"
+            src="/images/two.jpg"
             alt="Portrait of M. George"
-            className="w-full max-w-sm rounded-lg shadow-md object-cover"
+            className="h-[320px] w-auto rounded-lg shadow-md object-cover"
           />
         </div>
       </section>
