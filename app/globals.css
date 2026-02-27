@@ -1,26 +1,248 @@
+/* --------------------------------------------------
+   GLOBAL FONT (must be first)
+-------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Tailwind must come immediately after font imports */
 @import "tailwindcss";
-
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* --- Cinematic Warm Neutral Palette (Refined) --- */
+
+  /* Primary brand accent */
+  --accent: #7A2E2E;            /* deep oxide red */
+  --accent-light: #C46A3B;      /* burnt sienna */
+
+  /* Premium highlight (updated) */
+  --warm-yellow: #D4B483;       /* soft brass */
+  --warm-orange: #C46A3B;       /* warm sienna */
+
+  /* Editorial background + text */
+  --background: #F7F4F2;        /* porcelain white */
+  --foreground: #1E1E1E;        /* charcoal ink */
+
+  /* Restaurant card theme */
+  --primary: var(--accent);
+  --secondary: var(--warm-yellow);
+  --text: #ffffff;
+
+  /* Borders + shadows */
+  --card-border: #D9C7BD;       /* warm clay */
+  --shadow-soft: rgba(0, 0, 0, 0.08);
+  --shadow-strong: rgba(0, 0, 0, 0.15);
+
+  /* Per-restaurant overrides */
+  --restaurant-primary: var(--accent);
+  --restaurant-secondary: var(--warm-yellow);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
 
-body {
+
+/* --------------------------------------------------
+   GLOBAL BASE STYLES
+-------------------------------------------------- */
+html, body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+/* --------------------------------------------------
+   RESTAURANT CARD STYLES
+-------------------------------------------------- */
+.restaurant-card {
+  width: 100%;
+  max-width: 480px;
+  margin: 1.5rem auto;
+  padding: 1.25rem;
+  background: var(--primary);
+  color: var(--text);
+  border-radius: 0.75rem;
+  border: 2px solid var(--secondary);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.35);
+}
+
+/* Header */
+.card-header h1 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--secondary);
+  margin-bottom: 0.25rem;
+}
+
+.neighbourhood {
+  font-size: 0.9rem;
+  color: var(--secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Description */
+.description {
+  margin: 0.75rem 0;
+  color: var(--text);
+  opacity: 0.9;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Info section */
+.info-section p strong {
+  color: var(--secondary);
+  font-weight: 600;
+}
+
+/* Menu */
+.menu-section {
+  text-align: center;
+  margin-top: 1.25rem;
+}
+
+.menu-section h2 {
+  color: var(--secondary);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+/* Category */
+.menu-category {
+  margin-top: 1rem;
+}
+
+.category-title {
+  color: var(--secondary);
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.category-list {
+  padding: 0;
+  margin: 0 auto;
+  display: inline-block;
+  text-align: left;
+}
+
+/* Menu items */
+.menu-item {
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  max-width: 420px;
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dish {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.price {
+  color: var(--secondary);
+}
+
+.item-description {
+  color: var(--text);
+  opacity: 0.75;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  line-height: 1.4;
+}
+
+/* Tags */
+.item-tags {
+  margin-top: 0.35rem;
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.tag {
+  padding: 0.1rem 0.4rem;
+  border-radius: 0.35rem;
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--secondary);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Alcohol section */
+.alcohol-section {
+  border-top: 2px solid var(--secondary);
+  padding-top: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+/* Remove blank rectangle */
+.image-slot {
+  display: none;
+}
+
+/* Footer */
+.card-footer {
+  margin-top: 1.25rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text);
+  opacity: 0.85;
+}
+
+.card-footer .footer-handle {
+  display: none;
+}
+
+/* --------------------------------------------------
+   CONTROL CENTER UI
+-------------------------------------------------- */
+.dashboard-card {
+  border: 1px solid #e5e7eb;
+  background: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+
+.full-menu-link {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.view-full-menu {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+
+/* --------------------------------------------------
+   MOBILE OVERRIDES
+-------------------------------------------------- */
+@media (max-width: 480px) {
+  .restaurant-card {
+    padding: 1rem;
+    border-width: 1px;
+  }
+
+  .menu-item {
+    max-width: 100%;
+  }
 }

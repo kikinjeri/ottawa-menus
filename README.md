@@ -1,36 +1,176 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🍽️ Ottawa Menus — Restaurant Control Center
 
-## Getting Started
+A modern, cinematic admin dashboard for managing Ottawa restaurant data, generating branded menu cards, and preparing content for multi‑platform posting.
 
-First, run the development server:
+This Control Center powers the Ottawa Menus ecosystem — a community‑focused platform that highlights local restaurants, improves their online visibility, and automates content creation.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📸 Screenshots
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+> _Screenshots will be added as the UI evolves. Planned screenshots include:_
+- Restaurant List Page (Control Center)
+- Add Restaurant Form
+- Restaurant Detail Page (Menu Editor)
+- Menu Card Preview
+- Example Generated Menu Card
+- Google Maps Integration Example
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🚀 Current Features
 
-To learn more about Next.js, take a look at the following resources:
+### ✅ Restaurant List Page (`/control-center/restaurants`)
+A clean, responsive dashboard showing all restaurants in the system.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Includes:
+- Search by name, neighbourhood, cuisine, tags, categories  
+- Cinematic UI with blue‑grey background and elevated cards  
+- Delivery platform links (Uber Eats, DoorDash, SkipTheDishes)  
+- Google Maps link for each address  
+- Preview button → generates a menu card  
+- Post button → posts to Bluesky  
+- “Add Restaurant” button → opens the creation form  
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Tech:
+- Next.js App Router  
+- TypeScript + TSX  
+- Tailwind CSS  
+- Supabase (Postgres)  
+- API routes for card generation + posting  
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🏗️ Architecture Overview
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 1. Restaurant List Page
+- Displays all restaurants  
+- Provides quick actions (Preview, Post)  
+- Links to Add Restaurant page  
+- Will eventually link to Restaurant Detail pages  
+
+### 2. Add Restaurant Page (coming next)
+Will allow adding:
+- Name  
+- Address  
+- Phone  
+- Neighbourhood  
+- Cuisine  
+- Tags  
+- Categories  
+- Website URL  
+- Delivery URLs  
+- Google Maps URL (optional)  
+
+### 3. Restaurant Detail Page (planned)
+Will allow:
+- Editing restaurant info  
+- Adding/editing menu items  
+- Previewing the menu card  
+- Posting the menu card  
+- Viewing delivery links  
+- Viewing website link  
+- Viewing Google Maps link  
+
+### 4. Menu Card Generator
+- `/api/generate-card?id=123`  
+- Generates a branded HTML menu card  
+- Used for Preview + posting  
+
+---
+
+## 🗺️ Google Maps Integration
+
+### ✔ Current:
+- Each restaurant address includes a **Google Maps link**  
+- Uses a search‑based link (works without coordinates)  
+
+### ✔ Planned:
+- Add `google_maps_url` field to Supabase  
+- Store the exact Google Maps Place URL  
+- Display it on the detail page  
+- Use it in menu cards  
+
+### ✔ Sales Pitch Feature:
+Ottawa Menus will help restaurant owners:
+
+- Update their Google Maps photos  
+- Improve their Google Business Profile  
+- Improve their SEO  
+- Improve their online visibility  
+- Improve their delivery platform listings  
+
+### ❌ Not possible inside the app:
+- Uploading photos directly to Google Maps  
+- Editing Google Maps listings programmatically  
+
+### ✔ Possible with your service:
+- You (or the restaurant owner) upload photos manually  
+- You guide them through Google Business Profile optimization  
+- You store the correct Google Maps URL in your app  
+
+---
+
+## 📌 Future Features (Planned)
+
+### 🟦 Restaurant Detail Page
+- Edit restaurant info  
+- Add/edit/delete menu items  
+- Add delivery URLs  
+- Add website URL  
+- Add Google Maps URL  
+- Preview menu card  
+- Post menu card  
+
+### 🟦 Menu Item Editor
+- Add menu items  
+- Add prices  
+- Add descriptions  
+- Add categories  
+- Add dietary tags  
+
+### 🟦 Menu Card Generator Enhancements
+- Multiple card layouts  
+- Seasonal templates  
+- Branding options  
+- Auto‑generated captions  
+
+### 🟦 Posting Automation
+- Bluesky  
+- Instagram  
+- Threads  
+- Google Business Posts  
+- Facebook Pages  
+
+### 🟦 Restaurant SEO Toolkit
+- Google Maps optimization  
+- Google Business Profile improvements  
+- Website link integration  
+- Delivery platform link verification  
+- Photo recommendations  
+
+---
+
+## 🌱 Long‑Term Vision
+
+Ottawa Menus becomes a full SaaS ecosystem:
+
+- Restaurant discovery feed  
+- Automated posting  
+- Menu card generation  
+- Multi‑platform publishing  
+- Restaurant SEO improvement  
+- Google Maps optimization  
+- Delivery platform optimization  
+- Community‑driven content  
+
+---
+
+## 🧩 Next Steps
+
+- Build the **New Restaurant Page**  
+- Build the **Restaurant Detail + Menu Editor Page**  
+- Add support for website + delivery URLs  
+- Add support for Google Maps URLs  
+- Expand the menu card generator  
+
