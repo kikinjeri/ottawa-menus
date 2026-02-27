@@ -1,89 +1,98 @@
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-[#F7F3EB] text-[#0A1A2F] px-8 py-20">
-      <div className="max-w-4xl mx-auto space-y-16">
-        {/* HERO */}
-        <section className="space-y-6">
-          <h1 className="text-6xl font-extrabold tracking-tight">
+    <main className="relative min-h-screen bg-[#F7F3EB] text-[#0A1A2F]">
+      {/* NAVBAR */}
+      <nav className="w-full bg-[#0A1A2F] text-[#F7F3EB] py-4 px-8 shadow-md">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
+          <a href="/" className="text-2xl font-bold tracking-tight">
             Ottawa‑Menus
-          </h1>
-          <p className="text-2xl leading-relaxed text-[#1A2C45] max-w-3xl">
-            A modern, accessible, search‑optimized platform that helps Ottawa’s
-            restaurants present their menus with clarity, confidence, and
-            professionalism. Built for owners who want a strong digital presence
-            without the complexity.
-          </p>
-        </section>
+          </a>
 
-        {/* VALUE PROPOSITION */}
-        <section className="space-y-4">
-          <h2 className="text-3xl font-semibold">
-            Built for real business impact
+          <div className="flex gap-8 text-lg">
+            <a href="/" className="hover:text-[#3A6EA5] transition">
+              Home
+            </a>
+            <a href="/about" className="hover:text-[#3A6EA5] transition">
+              About
+            </a>
+            <a
+              href="/control-center/restaurants"
+              className="hover:text-[#3A6EA5] transition"
+            >
+              Control Center
+            </a>
+          </div>
+        </div>
+      </nav>
+
+      {/* HERO SECTION */}
+      <section className="w-full px-8 py-20 text-center bg-[#F7F3EB]">
+        <div className="max-w-4xl mx-auto space-y-6">
+          <h1 className="text-5xl font-extrabold tracking-tight text-[#0A1A2F]">
+            Accessible, Search‑Optimized HTML Menus for Ottawa’s Restaurants!
+          </h1>
+
+          <p className="text-xl text-[#1A2C45] leading-relaxed">
+            No PDFs. No clutter. Just clean, reliable menus that help customers
+            find you.
+          </p>
+        </div>
+
+        {/* FULL-WIDTH HERO IMAGE */}
+        <div className="mt-12 w-full">
+          <img
+            src="/hero.jpg"
+            alt="Ottawa restaurant scene"
+            className="w-full h-[460px] object-cover object-center shadow-md"
+          />
+        </div>
+      </section>
+
+      {/* BUSINESS VALUE SECTION */}
+      <section className="px-8 py-20 bg-white border-t border-[#E5DED3]">
+        <div className="max-w-4xl mx-auto space-y-6 text-center">
+          <h2 className="text-3xl font-bold text-[#2F4A6E] leading-snug">
+            Our curated menus help customers disccover you on Google, make your
+            dishes easier to browse, an expose your menu to more customers.
           </h2>
-          <p className="text-lg leading-relaxed">
-            Customers judge a restaurant within seconds of landing on its
-            website. Ottawa‑Menus ensures that first impression is clean,
-            readable, mobile‑friendly, and aligned with modern accessibility
-            standards. No PDFs. No clutter. Just a beautiful, structured menu
+
+          <p className="text-lg text-[#1A2C45] leading-relaxed max-w-3xl mx-auto">
+            Ottawa‑Menus gives you a clean, accessible, and search‑friendly menu
             that works everywhere.
           </p>
-        </section>
+        </div>
+      </section>
 
-        {/* SEO SECTION */}
-        <section className="space-y-4">
-          <h2 className="text-3xl font-semibold">
-            Designed for Google visibility
-          </h2>
-          <p className="text-lg leading-relaxed">
-            Search engines reward clarity, structure, and accessibility.
-            Ottawa‑Menus uses semantic HTML, optimized headings, and clean
-            metadata to help your restaurant appear more prominently in Google
-            search results. A well‑structured menu isn’t just good design — it’s
-            good SEO.
-          </p>
-          <ul className="list-disc pl-6 space-y-2 text-lg">
-            <li>Readable, structured menu content Google can index</li>
-            <li>Fast‑loading pages that improve ranking signals</li>
-            <li>Accessible markup that meets WCAG AA/AAA standards</li>
-            <li>Consistent formatting that builds trust with customers</li>
-          </ul>
-        </section>
+      {/* FEATURES */}
+      <section className="px-8 py-20 bg-[#F7F3EB]">
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16">
+          <div className="space-y-4">
+            <h3 className="text-2xl font-semibold text-[#0A1A2F]">
+              Generate Menus Instantly
+            </h3>
+            <p className="text-lg leading-relaxed text-[#1A2C45]">
+              Create clean, structured menu cards and sample menus in seconds —
+              perfect for your website, social media, or print. Every design is
+              consistent, readable, and built to convert customers.
+            </p>
+          </div>
 
-        {/* ACCESSIBILITY SECTION */}
-        <section className="space-y-4">
-          <h2 className="text-3xl font-semibold">
-            Accessibility as a core principle
-          </h2>
-          <p className="text-lg leading-relaxed">
-            Every menu card is built with inclusive design: high contrast,
-            readable typography, keyboard navigation, and screen‑reader‑friendly
-            structure. Accessibility isn’t an afterthought — it’s a competitive
-            advantage.
-          </p>
-        </section>
+          <div className="space-y-4">
+            <h3 className="text-2xl font-semibold text-[#0A1A2F]">
+              Update Items Easily
+            </h3>
+            <p className="text-lg leading-relaxed text-[#1A2C45]">
+              Add or adjust menu items anytime. Every update is instantly
+              optimized for Google indexing, helping customers discover your
+              dishes faster.
+            </p>
+          </div>
+        </div>
+      </section>
 
-        {/* WHAT YOU CAN DO */}
-        <section className="space-y-4">
-          <h2 className="text-3xl font-semibold">
-            What you can do with Ottawa‑Menus
-          </h2>
-          <ul className="list-disc pl-6 space-y-2 text-lg">
-            <li>Create beautiful, structured menu cards instantly</li>
-            <li>Generate sample menus for social media and promotions</li>
-            <li>Update your business details and menu items anytime</li>
-            <li>Maintain a consistent, professional online presence</li>
-          </ul>
-        </section>
-
-        {/* CTA */}
-        <section className="pt-6">
-          <a
-            href="/control-center/restaurants"
-            className="inline-block bg-[#0A1A2F] text-[#F7F3EB] px-8 py-4 rounded-lg text-lg font-semibold hover:bg-[#13263F] transition"
-          >
-            Go to Control Center →
-          </a>
-        </section>
+      {/* WATERMARK */}
+      <div className="absolute bottom-4 right-6 text-sm text-[#0A1A2F] opacity-40">
+        M. George
       </div>
     </main>
   );
